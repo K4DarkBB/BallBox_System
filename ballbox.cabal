@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3b0b111027e1f90d0998d6064d5cf00b5df46684da553fb52223f549b6182162
+-- hash: 655f26c042bedb1d5615c9ddbef6925cb1577442e8a3cdb41e04db6d90bd10f1
 
 name:           ballbox
 version:        0.1.0.0
@@ -34,6 +34,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , mtl
   default-language: Haskell2010
 
 executable ballbox-exe
@@ -46,6 +47,7 @@ executable ballbox-exe
   build-depends:
       ballbox
     , base >=4.7 && <5
+    , mtl
   default-language: Haskell2010
 
 test-suite ballbox-test
@@ -59,4 +61,5 @@ test-suite ballbox-test
   build-depends:
       ballbox
     , base >=4.7 && <5
+    , mtl
   default-language: Haskell2010
