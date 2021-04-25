@@ -1,7 +1,6 @@
 module Main where
 
 import Control.Monad.State
-import Debug.Trace
 import Lib
 
 count = 10
