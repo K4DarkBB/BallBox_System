@@ -1,20 +1,22 @@
 module Main where
 
-import Control.Monad.State
 import Lib
+import System.Environment (getArgs)
 
-count = 10
+count = 30
 
-boxes = toBox "o.oo.....o..o."
+boxes = toBox "oooo..oo...ooo..o.o."
 
 main :: IO ()
 main = do
-  mainloop boxes count
+  a <- getArgs
+  let bx =if null a then boxes else finalize $ toBox $ head a
+  mainloop bx count
 
 mainloop :: [Ball] -> Int -> IO ()
 mainloop _ 0 = putStrLn "end."
 mainloop b c = do
-  putStrLn $showBox b
+  putStrLn $ ">" <> showBox b
   mainloop (tail $finalize $update b) $c -1
 
 update :: [Ball] -> [Ball]
