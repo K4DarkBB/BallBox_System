@@ -5,7 +5,7 @@ import System.Environment (getArgs)
 
 count = 30
 
-boxes = toBox "oooo..oo...ooo..o.o."
+boxes = toBox "oooo..oo...ooo..o.o."--fS ■
 
 main :: IO ()
 main = do
@@ -17,4 +17,4 @@ mainloop :: [Ball] -> Int -> IO ()
 mainloop _ 0 = putStrLn "end."
 mainloop b c = do
   putStrLn $ ">" <> showBox b
-  mainloop (tail $finalize $update b) $c -1
+  mainloop (tail $finalize $boxUpdate b) $c -1
