@@ -21,20 +21,22 @@ boxUpdate (Exist : x) = None : boxUpdate (take c x <> [Will] <> drop (c + 1) x)
     c = getExCount x
 boxUpdate (e : x) = e : boxUpdate x
 
-finalize [] = [None]
-finalize (Will : x) = Exist : finalize x
-finalize (e : x) = e : finalize x
+finalize b = f <$> b <> [None]
+  where
+    f Will = Exist
+    f e = e
 
 showBox :: [Ball] -> String
-showBox [] = []
-showBox [_] = []
-showBox (Exist : x) = 'o' : showBox x
-showBox (_ : x) = '.' : showBox x
+showBox b = init $ sb <$> b
+  where
+    sb Exist = 'o'
+    sb _ = '.'
 
 toBox :: String -> [Ball]
-toBox [] = []
-toBox ('o' : s) = Exist : toBox s
-toBox (_ : s) = None : toBox s
+toBox s = tob <$> s
+  where
+    tob 'o' = Exist
+    tob _ = None
 
 ----------------------------------------
 
