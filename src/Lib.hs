@@ -29,7 +29,7 @@ finalize b = f <$> b <> [None]
 showBox :: [Ball] -> String
 showBox b = init $ sb <$> b
   where
-    sb Exist = 'o'
+    sb Exist = '■'
     sb _ = '.'
 
 toBox :: String -> [Ball]
