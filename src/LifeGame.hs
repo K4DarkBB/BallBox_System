@@ -1,3 +1,5 @@
+module LifeGame where
+
 import Data.Bits
 
 data LifeGame = LifeGame Integer Int Int
