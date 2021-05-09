@@ -1,6 +1,7 @@
 module LifeGame where
 
 import Data.Bits
+import Data.Word
 
 data LifeGame = LifeGame Integer Int Int
 
