@@ -1,3 +1,4 @@
 .stack-work/
 *~
 ballbox.cabal
+hie.yaml
