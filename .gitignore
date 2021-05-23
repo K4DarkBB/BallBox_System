@@ -1,4 +1,5 @@
 .stack-work/
 *~
+*.lock
 ballbox.cabal
 hie.yaml
