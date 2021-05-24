@@ -13,7 +13,7 @@ main = do
   bx <- if null a then randomBox 20 else return $ toBox $ head a <> "."
   mainloop bx count
 
-mainloop :: [Ball] -> Int -> IO ()
+mainloop :: Boxes -> Int -> IO ()
 mainloop _ 0 = putStrLn "end."
 mainloop b c = do
   putStrLn $ '>' : showBox b
