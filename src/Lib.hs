@@ -6,12 +6,14 @@ import System.Random
 
 data Ball = None | Exist | Will deriving (Eq, Enum)
 
+type Boxes = [Ball]
+
 instance Show Ball where
   show None = "□"
   show Exist = "■"
   show Will = "□"
 
-boxUpdate :: [Ball] -> [Ball]
+boxUpdate :: Boxes -> Boxes
 boxUpdate [] = []
 boxUpdate [a] = [a]
 boxUpdate (Exist : x) = None : boxUpdate (take c x <> [Will] <> drop (c + 1) x)
@@ -22,7 +24,7 @@ boxUpdate (Exist : x) = None : boxUpdate (take c x <> [Will] <> drop (c + 1) x)
     c = getExCount x
 boxUpdate (e : x) = e : boxUpdate x
 
-boxUpdate2D :: [[Ball]] -> [[Ball]]
+boxUpdate2D :: [Boxes] -> [Boxes]
 boxUpdate2D [] = []
 
 finalize b = f <$> b <> [None]
@@ -30,16 +32,16 @@ finalize b = f <$> b <> [None]
     f Will = Exist
     f e = e
 
-showBox :: [Ball] -> String
+showBox :: Boxes -> String
 showBox b = init $head . show <$> b
 
-toBox :: String -> [Ball]
+toBox :: String -> Boxes
 toBox s = tob <$> s
   where
     tob 'o' = Exist
     tob _ = None
 
-randomBox :: Int -> IO [Ball]
+randomBox :: Int -> IO Boxes
 randomBox 0 = return []
 randomBox len = randomRIO r >>= f
   where

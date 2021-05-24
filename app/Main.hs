@@ -16,5 +16,5 @@ main = do
 mainloop :: [Ball] -> Int -> IO ()
 mainloop _ 0 = putStrLn "end."
 mainloop b c = do
-  putStrLn $ ">" <> showBox b
+  putStrLn $ '>' : showBox b
   mainloop (tail . finalize . boxUpdate $b) $c -1
