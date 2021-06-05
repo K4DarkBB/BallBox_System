@@ -27,16 +27,16 @@ boxUpdate (e : x) = e : boxUpdate x
 boxUpdate2D :: [Boxes] -> [Boxes]
 boxUpdate2D [] = []
 
-finalize b = f <$> b <> [None]
+finalize = (<> [None]) . (f <$>)
   where
     f Will = Exist
     f e = e
 
 showBox :: Boxes -> String
-showBox b = init $head . show <$> b
+showBox = init . head . (show <$>)
 
 toBox :: String -> Boxes
-toBox s = tob <$> s
+toBox = (tob <$>)
   where
     tob 'o' = Exist
     tob _ = None
@@ -45,5 +45,5 @@ randomBox :: Int -> IO Boxes
 randomBox 0 = return []
 randomBox len = randomRIO r >>= f
   where
-    r = flip unsafeShiftL len <$> (1, 2 :: Int)
+    r = flip unsafeShiftL len <$> (1, 2 :: Int) -- make tapule
     f b = return $take (len + 1) $ toEnum . fromEnum . testBit b <$> [0 .. finiteBitSize b - 1]
