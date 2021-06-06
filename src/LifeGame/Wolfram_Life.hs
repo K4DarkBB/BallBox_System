@@ -3,27 +3,22 @@ module LifeGame.Wolfram_Life where
 import Control.Applicative
 import Control.Monad
 import Data.Bits
+import LifeGame.DataType
 
-class Functor w => Comonad w where
-  extract :: w a -> a
-  duplicate :: w a -> w (w a)
+type Rule = Int
 
-  extend :: (w b -> a) -> w b -> w a
-  extend f = fmap f . duplicate
+toRule :: Int -> Rule
+toRule = (255 .&.)
 
--- zipper list
-data Z a = Z [a] a [a]
+updateLife :: Rule -> Z Bool -> Z Bool
+updateLife = extend . (. neighborhoods) . computeNext
 
-left, right :: Z a -> Z a
-left (Z (l : ls) c rs) = Z ls l (c : rs)
-right (Z ls c (r : rs)) = Z (c : ls) r rs
+--111 110 101 100 011 010 001 000
+computeNext :: Rule -> (Bool, Bool, Bool) -> Bool
+computeNext r bs@(bl, bc, br) = toEnum $ 1 .&. r `shiftR` offset
+  where
+    il, ic, ir :: Int
+    (il, ic, ir) = (fromEnum bl, fromEnum bc, fromEnum br)
 
-instance Functor Z where
-  fmap f (Z ls c rs) = Z (f <$> ls) (f c) (f <$> rs)
-
-instance Comonad Z where
-  extract (Z _ a _) = a
-  duplicate z = Z (iterate1 left z) z (iterate1 right z)
-    where
-      iterate1 :: (a -> a) -> a -> [a]
-      iterate1 f = tail . iterate f
+    offset :: Int
+    offset = il `shiftL` 2 .&. ic `shiftL` 1 .&. ir
