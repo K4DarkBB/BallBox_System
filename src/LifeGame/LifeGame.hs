@@ -1,4 +1,4 @@
-module LifeGame where
+module LifeGame.TwoD where
 
 import Data.Bits
 import Data.Word

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0ef6b1a9f01d5b3fe14c844f6ab10659951d2bd29c4ac91e3c31f7f048313130
+-- hash: 82684a275c55d9d69e71087abceaea35ac28af09133e59d53b97facd4c3b60c8
 
 name:           ballbox
 version:        0.1.0.0
@@ -28,7 +28,8 @@ source-repository head
 library
   exposed-modules:
       Lib
-      LifeGame
+      LifeGame.LifeGame
+      LifeGame.Wolfram_Life
   other-modules:
       Paths_ballbox
   hs-source-dirs:
