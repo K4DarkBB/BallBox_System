@@ -3,3 +3,4 @@
 *.lock
 ballbox.cabal
 hie.yaml
+haddock/

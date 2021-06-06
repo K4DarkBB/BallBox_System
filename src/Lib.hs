@@ -33,7 +33,7 @@ finalize = (<> [None]) . (f <$>)
     f e = e
 
 showBox :: Boxes -> String
-showBox = init . head . (show <$>)
+showBox = init . fmap (head . show)
 
 toBox :: String -> Boxes
 toBox = (tob <$>)
