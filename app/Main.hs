@@ -1,26 +1,23 @@
 module Main where
 
-import Lib
-import System.Environment (getArgs)
-import qualified UI.HSCurses.Curses as C
-import qualified UI.HSCurses.CursesHelper as Ch
+import Data.Function (fix)
+import Lib (boxUpdate, randomBox)
+import Control.Monad (unless)
 
-count = 30
-
---boxes = toBox "oooo..oo...ooo..o.o." --fS ■ OS □.
+--fS ■ OS □.
 
 main :: IO ()
 main = do
-  a <- getArgs
-  bx <- if null a then randomBox 20 else pure $ toBox $ head a <> "."
-  Ch.start
-  mainloop bx count
-  C.refresh
-  C.getCh
-  Ch.end
+  boxes <- randomBox 40
+  flip fix (dropWhile (== 0) boxes) $ \loop b -> do
+    let next = boxUpdate b
+    putStr "\x1b[1J"
+    putStrLn $ fromBox next
+    c <- getChar
+    unless (c == 'q') . loop $ tail next
 
-mainloop :: Boxes -> Int -> IO ()
-mainloop _ 0 = putStrLn "end."
-mainloop b c = do
-  C.wAddStr C.stdScr $ '>' : showBox b <> "\n"
-  mainloop (tail . finalize . boxUpdate $b) $c -1
+toBox :: [Char] -> [Int]
+toBox = map $ fromEnum . (== 'o')
+
+fromBox :: [Int] -> [Char]
+fromBox = map $ \x -> if x == 1 then '■' else '□'

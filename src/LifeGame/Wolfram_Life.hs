@@ -1,7 +1,5 @@
 module LifeGame.Wolfram_Life where
 
-import Control.Applicative
-import Control.Monad
 import Data.Bits
 import LifeGame.DataType
 
@@ -15,7 +13,7 @@ updateLife = extend . (. neighborhoods) . computeNext
 
 --111 110 101 100 011 010 001 000
 computeNext :: Rule -> (Bool, Bool, Bool) -> Bool
-computeNext r bs@(bl, bc, br) = toEnum $ 1 .&. r `shiftR` offset
+computeNext r (bl, bc, br) = toEnum $ 1 .&. r `shiftR` offset
   where
     il, ic, ir :: Int
     (il, ic, ir) = (fromEnum bl, fromEnum bc, fromEnum br)
