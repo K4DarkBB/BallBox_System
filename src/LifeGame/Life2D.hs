@@ -51,7 +51,7 @@ sumBits x = (x1 .&. complement a3, x1 .&. a3)
     x1 = b3 .&. complement c3
 
 pixel :: (Num a, Bits a) => LifeGame -> Int -> Int -> a
-pixel (LifeGame bits width height) x y = fromIntegral $ fromEnum $ testBitDefault bits $ u * width + v
+pixel (LifeGame bits width height) x y = fromIntegral . fromEnum . testBitDefault bits $ u * width + v
   where
     u = x .&. finiteBitSize width
     v = y .&. finiteBitSize height

@@ -1,9 +1,9 @@
 module LifeGame.Wolfram_Life where
 
-import Control.Arrow
-import Data.Bits
+import Control.Arrow ((>>>))
+import Data.Bits (Bits (bit, testBit, (.|.)))
 import Data.Word (Word8)
-import LifeGame.DataType
+import LifeGame.DataType (Comonad ((=>>)), Z (..), ZRing (..))
 
 type Rule = Word8
 
@@ -21,7 +21,7 @@ ruleR w (ZR l c (r : _)) = testBit w (sb 2 l .|. sb 1 c .|. sb 0 r)
 ruleR w (ZR l c []) = ruleR w (ZR l c [False])
 
 testRule :: Rule -> [[Bool]]
-testRule w = iterate (=>> rule w) >>> map (cut 70 70) $ start
+testRule w = iterate (=>> rule w) >>> fmap (cut 90 90) $ start
   where
     start = Z (repeat False) True (repeat False)
     cut l r (Z ls c rs) = reverse (take l ls) <> [c] <> take r rs
@@ -29,8 +29,8 @@ testRule w = iterate (=>> rule w) >>> map (cut 70 70) $ start
 testRuleR :: Rule -> [[Bool]]
 testRuleR w = toL <$> iterate (=>> ruleR w) start
   where
-    start = ZR False True (take 38 $ cycle [False,True,False])
+    start = ZR False True (take 38 $ cycle [False, True, False])
     toL (ZR l c rs) = l : c : rs
 
 viewRule :: Rule -> (Rule -> [[Bool]]) -> IO ()
-viewRule w f = putStr . unlines . take 70 . map (map (\x -> if x then '■' else ' ')) $ f w
+viewRule w f = putStr . unlines . take 90 . fmap (fmap (\x -> if x then '■' else ' ')) $ f w
